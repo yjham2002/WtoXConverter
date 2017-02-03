@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -115,10 +116,10 @@ public class XWConverter {
 
             Table param = new Table();
             param.addTableEle(TableEle.TH,
-                    Paragraph.withPieces(ParagraphPiece.with("파라미터").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("설명").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("필수 여부").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("비고").withStyle().fontSize("10").create()).create()
+                    Paragraph.withPieces(ParagraphPiece.with("파라미터").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("설명").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("필수 여부").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("비고").withStyle().fontSize("10").bold().create()).create()
             );
 
             for(int e = 0; e < tableList.get(i).listParams.size(); e++) {
@@ -137,19 +138,31 @@ public class XWConverter {
             myDoc.addEle(Paragraph.withPieces(ParagraphPiece.with(" C. 리턴 결과").withStyle().font(Font.CENTURY_GOTHIC).fontSize("10").create()).create());
 
             Table returnTable = new Table();
+
             returnTable.addTableEle(TableEle.TH,
-                    Paragraph.withPieces(ParagraphPiece.with("1 depth").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("2 depth").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("3 depth").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("설명").withStyle().fontSize("10").create()).create(),
-                    Paragraph.withPieces(ParagraphPiece.with("비고").withStyle().fontSize("10").create()).create()
+                    Paragraph.withPieces(ParagraphPiece.with("1 depth").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("2 depth").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("3 depth").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("설명").withStyle().fontSize("10").bold().create()).create(),
+                    Paragraph.withPieces(ParagraphPiece.with("비고").withStyle().fontSize("10").bold().create()).create()
             );
 
             for(int e = 0; e < tableList.get(i).listReturns.size(); e++) {
+                int depCnt = Arrays.asList(tableList.get(i).listReturns.get(e).list[2].trim().split("->")).size() - 1;
+                String dep1 = tableList.get(i).listReturns.get(e).list[0];
+                String dep2 = tableList.get(i).listReturns.get(e).list[0];
+                String dep3 = tableList.get(i).listReturns.get(e).list[0];
+                switch (depCnt){
+                    case 0: dep2 = ""; dep3 = ""; break;
+                    case 1: dep1 = ""; dep3 = ""; break;
+                    case 2: dep1 = ""; dep2 = ""; break;
+                    default: dep1 = ""; dep2 = "";  break;
+                }
+
                 returnTable.addTableEle(TableEle.TD,
-                        Paragraph.withPieces(ParagraphPiece.with(tableList.get(i).listReturns.get(e).list[0]).withStyle().fontSize("10").create()).create(),
-                        Paragraph.withPieces(ParagraphPiece.with(tableList.get(i).listReturns.get(e).list[3]).withStyle().fontSize("10").create()).create(),
-                        Paragraph.withPieces(ParagraphPiece.with(tableList.get(i).listReturns.get(e).list[3]).withStyle().fontSize("10").create()).create(),
+                        Paragraph.withPieces(ParagraphPiece.with(dep1).withStyle().fontSize("10").create()).create(),
+                        Paragraph.withPieces(ParagraphPiece.with(dep2).withStyle().fontSize("10").create()).create(),
+                        Paragraph.withPieces(ParagraphPiece.with(dep3).withStyle().fontSize("10").create()).create(),
                         Paragraph.withPieces(ParagraphPiece.with(tableList.get(i).listReturns.get(e).list[4]).withStyle().fontSize("10").create()).create(),
                         Paragraph.withPieces(ParagraphPiece.with(tableList.get(i).listReturns.get(e).list[3]).withStyle().fontSize("10").create()).create()
                 );
