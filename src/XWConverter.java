@@ -168,7 +168,7 @@ public class XWConverter {
         try {
             writer = new PrintWriter(fileObj);
         } catch (FileNotFoundException e) {
-            System.out.println("파일이 사용 중이거나 존재하지 않습니다.");
+            System.out.println("파일이 사용 중이거나 접근할 권한이 없습니다.");
             succFlag = false;
             return;
         }
@@ -183,8 +183,8 @@ public class XWConverter {
         parseAndWrite();
         writeFile();
 
-        if(succFlag) System.out.println(dest + " - 변환 작업이 완료되었습니다.");
-        else System.out.println(dest + " - 변환 작업에 실패하였습니다.");
+        if(succFlag) System.out.println(origin + " => " + dest + " - 변환 작업이 완료되었습니다.");
+        else System.out.println(origin + " => " + dest + " - 변환 작업에 실패하였습니다.");
     }
 
 }
