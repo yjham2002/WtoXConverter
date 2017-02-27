@@ -80,14 +80,16 @@ public class XWConverter {
 
                 int j;
 
-                for(j = i + 3; !sheet.getCell(0, j).getContents().equals("CALL SAMPLE"); j++) {
-                    params.add(new ExcelRow(new String[]{
-                            sheet.getCell(1, j).getContents(),
-                            sheet.getCell(2, j).getContents(),
-                            sheet.getCell(3, j).getContents(),
-                            sheet.getCell(4, j).getContents(),
-                            sheet.getCell(5, j).getContents()}));
-                }
+                try {
+                    for (j = i + 3; !sheet.getCell(0, j).getContents().equals("CALL SAMPLE"); j++) {
+                        params.add(new ExcelRow(new String[]{
+                                sheet.getCell(1, j).getContents(),
+                                sheet.getCell(2, j).getContents(),
+                                sheet.getCell(3, j).getContents(),
+                                sheet.getCell(4, j).getContents(),
+                                sheet.getCell(5, j).getContents()}));
+                    }
+
 
                 String sample = sheet.getCell(1, j).getContents();
                 String ret = sheet.getCell(1, j + 1).getContents();
@@ -104,6 +106,10 @@ public class XWConverter {
 
                 ExcelTable excelTable = new ExcelTable(apiName, expText, sample, ret, params, returns);
                 tableList.add(excelTable);
+                }catch(Exception e){
+                    System.out.println(apiCount + " 번째 api 테이블에서 오류가 발생했습니다. 출력에서 제외됩니다.");
+                    e.printStackTrace();
+                }
             }
         }
 
